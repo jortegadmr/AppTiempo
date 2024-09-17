@@ -36,7 +36,7 @@ import { BaseChartDirective } from 'ng2-charts';
 export class WeatherComponent {
 
   //Variables
-  city: string = 'Seville';   //Ciudad por defecto
+  city: string = 'Sevilla';   //Ciudad por defecto
   weatherData: any;           //Datos del clima
 
   //Configuración del gráfico

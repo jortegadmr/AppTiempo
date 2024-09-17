@@ -1,5 +1,5 @@
 <div class="container text-center">
-    <h1>Check the Weather</h1>
+    <h1>Tiempo en {{city}}</h1>
     
     <div class="mt-4 mb-4">
       <input 
@@ -9,6 +9,12 @@
         placeholder="Elige una ciudad..."
         style="width: 300px; margin: 0 auto;">
     </div>
+
+    <p class="card-text">
+        <img [src]="'https://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '@2x.png'" />
+        {{ weatherData.weather[0].description }}
+      </p>
+      
 
     <div *ngIf="loading" class="text-center">
       <div class="spinner-border" role="status">
