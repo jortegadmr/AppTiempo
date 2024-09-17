@@ -1,87 +1,164 @@
-.weather-app {
-    min-height: 100vh;
-    background: linear-gradient(135deg, #6e8efb, #a777e3);
-    padding: 2rem 0;
-    color: white;
+:root {
+  --primary-color: #3498db;
+  --secondary-color: #2ecc71;
+  --background-color: #ecf0f1;
+  --text-color: #34495e;
+  --gradient-start: #6e8efb;
+  --gradient-end: #a777e3;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.container {
+  max-width: 1200px;
+  width: 100%;
+}
+
+.weather-card {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+  padding: 2rem;
+  color: white;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(31, 38, 135, 0.5);
   }
-  
-  .search-box {
-    position: relative;
-  }
-  
-  .search-box input {
-    padding-right: 3rem;
-    border-radius: 2rem;
+}
+
+.search-box {
+  position: relative;
+  margin-bottom: 2rem;
+
+  input {
+    width: 100%;
+    padding: 1rem 3rem 1rem 1.5rem;
     border: none;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 50px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+
+    &:focus {
+      outline: none;
+      background-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+    }
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
   }
-  
+
   .search-icon {
     position: absolute;
-    right: 1rem;
+    right: 1.5rem;
     top: 50%;
     transform: translateY(-50%);
-    color: #6e8efb;
+    color: white;
+    font-size: 1.2rem;
   }
-  
-  .weather-info {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 1rem;
-    padding: 2rem;
-    backdrop-filter: blur(10px);
-  }
-  
-  .current-weather {
-    text-align: center;
-  }
-  
+}
+
+.current-weather {
+  text-align: center;
+  margin-bottom: 2rem;
+
   .weather-icon {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 1rem;
   }
-  
+
   .city-name {
     font-size: 2.5rem;
-    margin-bottom: 0;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
   }
-  
+
   .temperature {
     font-size: 4rem;
-    font-weight: bold;
-    margin-bottom: 0;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
   }
-  
+
   .description {
     font-size: 1.5rem;
     text-transform: capitalize;
+    opacity: 0.8;
   }
-  
-  .weather-details i {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
+}
+
+.weather-details {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 2rem;
+
+  .detail {
+    text-align: center;
+
+    i {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: var(--secondary-color);
+    }
+
+    .value {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .label {
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
   }
-  
-  .weather-details .value {
-    font-size: 1.25rem;
-    font-weight: bold;
-  }
-  
-  .forecast-chart {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 1rem;
-    padding: 1rem;
-  }
-  
-  :host {
-    --primary-color: #3498db;
-    --secondary-color: #2ecc71;
-    --background-color: #ecf0f1;
-    --text-color: #34495e;
+}
+
+.forecast-chart {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .weather-card {
+    padding: 1.5rem;
   }
 
-  .weather-card {
-    background-color: var(--background-color);
-    color: var(--text-color);
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  .current-weather {
+    .city-name {
+      font-size: 2rem;
+    }
+
+    .temperature {
+      font-size: 3rem;
+    }
+
+    .description {
+      font-size: 1.2rem;
+    }
   }
+
+  .weather-details {
+    flex-wrap: wrap;
+
+    .detail {
+      width: 50%;
+      margin-bottom: 1rem;
+    }
+  }
+}

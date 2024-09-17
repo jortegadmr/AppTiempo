@@ -82,6 +82,9 @@ export class WeatherComponent implements OnInit, AfterViewInit {
     this.renderChart(cityName, temperature);
   }
 
+  //Método para el gráfico de la temperatura actual
+
+  
   renderChart(cityName: string, temperature: number) {
     console.log('Renderizando gráfico:', cityName, temperature);
     if (this.chart) {
@@ -120,6 +123,8 @@ export class WeatherComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
+  //Método para el gráfico del pronóstico
 
   renderForecastChart() {
     if (!this.forecastData || !this.forecastData.list) return;
@@ -184,6 +189,8 @@ export class WeatherComponent implements OnInit, AfterViewInit {
     });
   }
 
+  //Método para obtener el pronóstico
+
   getForecast(city: string) {
     this.loading = true;
     this.weatherService.getForecast(city).subscribe({
@@ -201,6 +208,9 @@ export class WeatherComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
+  //Método para cambiar entre Celsius y Fahrenheit
+
 
   toggleUnits() {
     this.isCelsius = !this.isCelsius;
