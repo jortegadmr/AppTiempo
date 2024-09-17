@@ -185,6 +185,7 @@ export class WeatherComponent implements OnInit, AfterViewInit {
   }
 
   getForecast(city: string) {
+    this.loading = true;
     this.weatherService.getForecast(city).subscribe({
       next: (data) => {
         this.forecastData = data;
@@ -194,6 +195,9 @@ export class WeatherComponent implements OnInit, AfterViewInit {
       error: (error) => {
         console.error('Error al obtener el pronóstico:', error);
         this.loading = false; // Asegúrate de que esto esté aquí
+      },
+      complete: () => {
+        this.loading = false;
       }
     });
   }
