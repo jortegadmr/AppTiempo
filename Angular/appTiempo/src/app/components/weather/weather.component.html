@@ -1,0 +1,38 @@
+<div class="container text-center">
+    <h1>Check the Weather</h1>
+    
+    <div class="mt-4 mb-4">
+      <input 
+        [(ngModel)]="city" 
+        (keyup.enter)="getWeather(city)" 
+        class="form-control"
+        placeholder="Elige una ciudad..."
+        style="width: 300px; margin: 0 auto;">
+    </div>
+
+    <div *ngIf="loading" class="text-center">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+    </div>
+
+    <div *ngIf="weatherData">
+        <canvas baseChart
+          [data]="lineChartData"
+          [options]="lineChartOptions"
+          [legend]="lineChartLegend"
+          chartType="line">
+        </canvas>
+      </div>
+      
+    
+    <div *ngIf="weatherData" class="card mx-auto mt-4" style="width: 18rem;" [@fadeInOut]>
+      <div class="card-body">
+        <h5 class="card-title">{{ weatherData.name }}</h5>
+        <p class="card-text">Temperature: {{ weatherData.main.temp }} °C</p>
+        <p class="card-text">Weather: {{ weatherData.weather[0].description }}</p>
+        <p class="card-text">Humidity: {{ weatherData.main.humidity }}%</p>
+        <p class="card-text">Wind: {{ weatherData.wind.speed }} m/s</p>
+      </div>
+    </div>
+  </div>
