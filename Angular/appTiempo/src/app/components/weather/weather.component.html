@@ -28,7 +28,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ weatherData.name }}</h5>
             <div class="d-flex justify-content-center align-items-center">
-              <img [src]="'https://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '@2x.png'" alt="Icono del tiempo" class="me-3" />
+              <img [src]="'https://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '@2x.png'" />
               <div>
                 <h2 class="mb-0">{{ weatherData.main.temp | number:'1.0-0' }}°C</h2>
                 <p>{{ weatherData.weather[0].description | titlecase }}</p>
@@ -46,15 +46,15 @@
       <div *ngIf="weatherData && esBrowser" class="col-md-6 mb-4">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Pronóstico de temperatura</h5>
-            <canvas baseChart
-              [data]="lineChartData"
-              [options]="lineChartOptions"
-              [legend]="lineChartLegend"
-              chartType="line">
+            <h5 class="card-title">Temperatura actual en {{weatherData.name}}</h5>
+            <canvas id="weatherChart" width="400" height="200">
+              El navegador no soporta el elemento canvas.
             </canvas>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+ 
+  

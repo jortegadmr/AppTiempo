@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { BaseChartDirective } from 'ng2-charts';
+
 
 
 @Component({
@@ -7,7 +9,7 @@ import { RouterOutlet } from '@angular/router';
   standalone: true,
   imports: [
     RouterOutlet, 
-    
+    BaseChartDirective
     
   ],
   templateUrl: './app.component.html',
