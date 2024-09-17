@@ -71,3 +71,17 @@
     border-radius: 1rem;
     padding: 1rem;
   }
+  
+  :host {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --background-color: #ecf0f1;
+    --text-color: #34495e;
+  }
+
+  .weather-card {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }

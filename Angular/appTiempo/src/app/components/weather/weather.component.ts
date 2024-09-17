@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit, PLATFORM_ID, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { WeatherService } from '../../services/weather.service';
 import { CommonModule } from '@angular/common';
@@ -24,13 +24,19 @@ Chart.register(...registerables)
 
   animations: [
     trigger('fadeInOut', [
-      state('void', style({ opacity: 0 })),
-      transition('void <=> *', animate(500)),
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('300ms', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        animate('300ms', style({ opacity: 0 }))
+      ])
     ])
   ],
 
   templateUrl: './weather.component.html',
-  styleUrls: ['./weather.component.scss']
+  styleUrls: ['./weather.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class WeatherComponent implements OnInit, AfterViewInit {
@@ -40,6 +46,8 @@ export class WeatherComponent implements OnInit, AfterViewInit {
   weatherData: any;           //Datos del clima
   loading: boolean = false;
   error: string | null = null;
+  forecastData: any;
+  isCelsius: boolean = true;  // Añade esta línea
 
   public esBrowser: boolean;
 
@@ -113,6 +121,47 @@ export class WeatherComponent implements OnInit, AfterViewInit {
     });
   }
 
+  renderForecastChart() {
+    if (!this.forecastData || !this.forecastData.list) return;
+
+    const canvas = document.getElementById('forecastChart') as HTMLCanvasElement;
+    if (!canvas) {
+      console.error('No se encontró el elemento canvas para el pronóstico');
+      return;
+    }
+
+    const labels = this.forecastData.list.slice(0, 5).map((item: any) => 
+      new Date(item.dt * 1000).toLocaleDateString('es-ES', { weekday: 'short' })
+    );
+    const temperatures = this.forecastData.list.slice(0, 5).map((item: any) => item.main.temp);
+
+    new Chart(canvas, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Temperatura (°C)',
+          data: temperatures,
+          borderColor: 'rgb(75, 192, 192)',
+          tension: 0.1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: false,
+            title: {
+              display: true,
+              text: 'Temperatura (°C)'
+            }
+          }
+        }
+      }
+    });
+  }
+
+
   //Método para obtener los datos del clima
 
   getWeather(city: string) {
@@ -127,6 +176,7 @@ export class WeatherComponent implements OnInit, AfterViewInit {
       error: (error) => {
         console.error('Error al obtener datos del clima:', error);
         this.error = 'No se pudo obtener la información del clima. Por favor, intenta de nuevo.';
+        this.loading = false;
       },
       complete: () => {
         this.loading = false;
@@ -134,5 +184,22 @@ export class WeatherComponent implements OnInit, AfterViewInit {
     });
   }
 
-  
+  getForecast(city: string) {
+    this.weatherService.getForecast(city).subscribe({
+      next: (data) => {
+        this.forecastData = data;
+        this.loading = false; // Mueve esto aquí
+        this.renderForecastChart();
+      },
+      error: (error) => {
+        console.error('Error al obtener el pronóstico:', error);
+        this.loading = false; // Asegúrate de que esto esté aquí
+      }
+    });
+  }
+
+  toggleUnits() {
+    this.isCelsius = !this.isCelsius;
+    // Actualizar la visualización de la temperatura
+  }
 }

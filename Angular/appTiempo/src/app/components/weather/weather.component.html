@@ -10,20 +10,20 @@
           placeholder="Elige una ciudad..."
           aria-label="Ciudad"
           aria-describedby="button-addon2">
-        <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="getWeather(city)">
-          <i class="fas fa-search"></i> Buscar
+        <button aria-label="Buscar clima" (click)="getWeather(city)">
+          <i class="fas fa-search" aria-hidden="true"></i> Buscar
         </button>
       </div>
     </div>
 
-    <div *ngIf="loading" class="text-center mb-4">
+    <!-- <div *ngIf="loading" class="text-center mb-4">
       <div class="spinner-border text-primary" role="status">
         <span class="visually-hidden">Cargando...</span>
       </div>
-    </div>
+    </div> -->
 
     <div *ngIf="weatherData" [@fadeInOut] class="row">
-      <div class="col-md-6 mb-4">
+      <div class="col-md-6 col-lg-4 mb-4">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">{{ weatherData.name }}</h5>
@@ -43,7 +43,7 @@
         </div>
       </div>
       
-      <div *ngIf="weatherData && esBrowser" class="col-md-6 mb-4">
+      <div *ngIf="weatherData && esBrowser" class="col-md-6 col-lg-8 mb-4">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Temperatura actual en {{weatherData.name}}</h5>
@@ -51,6 +51,17 @@
               El navegador no soporta el elemento canvas.
             </canvas>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="forecastData" class="col-md-6 col-lg-8 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Pronóstico para {{weatherData.name}}</h5>
+          <canvas id="forecastChart" width="400" height="200">
+            El navegador no soporta el elemento canvas.
+          </canvas>
         </div>
       </div>
     </div>
